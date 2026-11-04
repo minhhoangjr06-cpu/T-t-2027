@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notion Tết Countdown Widget</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Montserrat", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Transparent body for seamless embed inside Notion background */
+      body {
+        background-color: transparent;
+        font-family: "Montserrat", sans-serif;
+        overflow: hidden;
+        user-select: none;
+      }
+
+      /* Compact Glassmorphism Widget Card */
+      .notion-widget-card {
+        background: linear-gradient(
+          135deg,
+          rgba(139, 0, 0, 0.85) 0%,
+          rgba(90, 0, 10, 0.9) 100%
+        );
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 215, 0, 0.25);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      }
+
+      /* Gold Gradient Text */
+      .gold-text {
+        background: linear-gradient(
+          180deg,
+          #fff8dc 0%,
+          #ffd700 60%,
+          #daa520 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Individual Number Box */
+      .time-box {
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 215, 0, 0.15);
+        backdrop-filter: blur(4px);
+      }
+    </style>
+  </head>
+  <body class="flex items-center justify-center min-h-screen p-2">
+    <!-- Notion Widget Container -->
+    <main
+      class="w-full max-w-lg notion-widget-card rounded-2xl p-4 sm:p-5 text-center relative overflow-hidden"
+    >
+      <!-- Header Title & Icon -->
+      <header class="flex items-center justify-center gap-2 mb-3">
+        <!-- Flower SVG Icon -->
+        <svg
+          class="w-4 h-4 text-amber-300"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            d="M12,2 C13.5,6 17.5,7.5 19.5,10 C21.5,12.5 20.5,16.5 18,18.5 C15.5,20.5 12,19.5 12,22 C12,19.5 8.5,20.5 6,18.5 C3.5,16.5 2.5,12.5 4.5,10 C6.5,7.5 10.5,6 12,2 Z"
+          />
+        </svg>
+        <h1
+          class="text-xs sm:text-sm font-semibold tracking-wider text-yellow-200/90 uppercase font-serif"
+        >
+          Đếm Ngược Tết Nguyên Đán 2027
+        </h1>
+        <svg
+          class="w-4 h-4 text-amber-300 transform scale-x-[-1]"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            d="M12,2 C13.5,6 17.5,7.5 19.5,10 C21.5,12.5 20.5,16.5 18,18.5 C15.5,20.5 12,19.5 12,22 C12,19.5 8.5,20.5 6,18.5 C3.5,16.5 2.5,12.5 4.5,10 C6.5,7.5 10.5,6 12,2 Z"
+          />
+        </svg>
+      </header>
+
+      <!-- Countdown Numbers Grid -->
+      <div class="grid grid-cols-4 gap-2 sm:gap-3 my-1">
+        <!-- Days -->
+        <div
+          class="time-box rounded-xl p-2 sm:p-3 flex flex-col items-center justify-center"
+        >
+          <span
+            id="days"
+            class="text-2xl sm:text-4xl font-extrabold gold-text leading-none"
+            >00</span
+          >
+          <span
+            class="text-[9px] sm:text-[11px] font-medium uppercase text-yellow-100/70 mt-1.5 tracking-wider"
+            >Ngày</span
+          >
+        </div>
+
+        <!-- Hours -->
+        <div
+          class="time-box rounded-xl p-2 sm:p-3 flex flex-col items-center justify-center"
+        >
+          <span
+            id="hours"
+            class="text-2xl sm:text-4xl font-extrabold gold-text leading-none"
+            >00</span
+          >
+          <span
+            class="text-[9px] sm:text-[11px] font-medium uppercase text-yellow-100/70 mt-1.5 tracking-wider"
+            >Giờ</span
+          >
+        </div>
+
+        <!-- Minutes -->
+        <div
+          class="time-box rounded-xl p-2 sm:p-3 flex flex-col items-center justify-center"
+        >
+          <span
+            id="minutes"
+            class="text-2xl sm:text-4xl font-extrabold gold-text leading-none"
+            >00</span
+          >
+          <span
+            class="text-[9px] sm:text-[11px] font-medium uppercase text-yellow-100/70 mt-1.5 tracking-wider"
+            >Phút</span
+          >
+        </div>
+
+        <!-- Seconds -->
+        <div
+          class="time-box rounded-xl p-2 sm:p-3 flex flex-col items-center justify-center"
+        >
+          <span
+            id="seconds"
+            class="text-2xl sm:text-4xl font-extrabold gold-text leading-none"
+            >00</span
+          >
+          <span
+            class="text-[9px] sm:text-[11px] font-medium uppercase text-yellow-100/70 mt-1.5 tracking-wider"
+            >Giây</span
+          >
+        </div>
+      </div>
+
+      <!-- Footer Lunar Date Line -->
+      <footer class="mt-2.5">
+        <p class="text-[10px] sm:text-xs text-yellow-300/80 font-light">
+          Mùng 1 Tết:
+          <span class="font-medium text-white">06/02/2027 (Đinh Mùi)</span>
+        </p>
+      </footer>
+    </main>
+
+    <!-- Countdown Logic -->
+    <script>
+      // Target Date: Tet 2027 (Feb 6, 2027)
+      const TARGET_DATE = new Date("2027-02-06T00:00:00").getTime();
+
+      const daysEl = document.getElementById("days");
+      const hoursEl = document.getElementById("hours");
+      const minutesEl = document.getElementById("minutes");
+      const secondsEl = document.getElementById("seconds");
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const diff = TARGET_DATE - now;
+
+        if (diff <= 0) {
+          daysEl.innerText = "00";
+          hoursEl.innerText = "00";
+          minutesEl.innerText = "00";
+          secondsEl.innerText = "00";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        daysEl.innerText = String(days).padStart(2, "0");
+        hoursEl.innerText = String(hours).padStart(2, "0");
+        minutesEl.innerText = String(minutes).padStart(2, "0");
+        secondsEl.innerText = String(seconds).padStart(2, "0");
+      }
+
+      // Run immediately and update every second
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
